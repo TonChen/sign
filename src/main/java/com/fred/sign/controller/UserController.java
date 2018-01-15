@@ -4,7 +4,9 @@ import com.fred.sign.base.BaseController;
 import com.fred.sign.domain.User;
 import com.fred.sign.exception.CommonException;
 import com.fred.sign.service.UserService;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -25,6 +27,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@RequestMapping("hello")
 public class UserController extends BaseController {
     @Autowired
     private UserService userService;
@@ -35,8 +38,8 @@ public class UserController extends BaseController {
         log.info("请求的数据是：{}, {}" , id, user);
 
         if(bindingResult.hasErrors()){
-            List<ObjectError> errors = bindingResult.getAllErrors();
-            StringBuffer sb = new StringBuffer("");
+            val errors = bindingResult.getAllErrors();
+            val sb = new StringBuffer("");
             errors.forEach((error) -> {
                 log.error(" {} ", ((FieldError)error).getField()+"："+error.getDefaultMessage());
                 sb.append(((FieldError)error).getField()+"："+error.getDefaultMessage());
@@ -48,9 +51,9 @@ public class UserController extends BaseController {
     }
 
 
-    @PostMapping("hello")
-    public Object hello(@RequestParam Integer id, @RequestParam(required = false) Date date){
-
+    @PostMapping("/hello")
+    public Object hello(@NonNull User user, @RequestParam(required = false) Date date){
+        log.info("result:{}", user.getId());
         return "你好~"+date;
     }
 

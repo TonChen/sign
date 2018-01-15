@@ -1,5 +1,6 @@
 package com.fred.sign.validation;
 
+import com.fred.sign.domain.User;
 import com.fred.sign.exception.CommonException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -17,6 +18,12 @@ import java.util.Date;
 @Slf4j
 public class RequestValidation {
 
+
+    @ModelAttribute
+    public User newUser(){
+        log.info("init user ...");
+        return null;
+    }
 
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder){
